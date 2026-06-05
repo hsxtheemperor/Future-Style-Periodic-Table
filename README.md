@@ -11,9 +11,10 @@
         <img src="https://img.shields.io/badge/科技爱好者周刊-第383期推荐-ff69b4?style=flat-square&logo=rss" alt="Tech Enthusiast Weekly">
     </a>
     <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
+    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+    <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite">
     <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
     <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS3">
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
   </p>
 
   <h3>
@@ -82,13 +83,14 @@
 
 ## 🛠️ 技术栈 (Tech Stack)
 
-本项目采用 **Vanilla JavaScript (ES6+)** 开发，零构建依赖，开箱即用。
+本项目采用 **TypeScript + Vite** 开发，模块化架构，类型安全。
 
 | 技术 | 用途 |
 |:---|:---|
+| **TypeScript** | 类型安全的业务逻辑、数据处理、事件交互 |
+| **Vite** | 开发服务器、构建打包、模块热替换 |
 | **HTML5** | 语义化结构与 DOM 容器 |
 | **CSS3** | Grid/Flexbox 布局、3D Transforms、CSS Variables、Media Queries |
-| **JavaScript** | 数据驱动渲染、电子排布算法、事件交互、动画控制 |
 
 ### 技术亮点
 
@@ -96,75 +98,89 @@
 - 🎭 **CSS 3D Transforms**：`transform-style: preserve-3d` 实现电子轨道旋转。
 - 🎨 **CSS Variables**：主题颜色统一管理，便于自定义。
 - 📱 **Responsive Design**：多断点媒体查询，适配各类屏幕尺寸。
-- ⚡ **性能优化**：DOM 元素缓存机制，减少 90% 的重复查询，提升交互响应速度。
-- 🔧 **代码质量**：模块化设计，通用函数提取，易于维护和扩展。
+- 🔒 **TypeScript Strict Mode**：完整的类型覆盖，编译期捕获错误。
+- 🧩 **模块化设计**：功能拆分为独立模块（table、modal、atom3d、heatmap 等），职责清晰。
 
 ---
 
 ## 📂 目录结构 (Structure)
 
-项目采用清晰的模块化结构，所有数据通过 JS 变量内嵌，**无需后端环境**。
+项目采用清晰的模块化结构，TypeScript + Vite 构建。
 
 ```
 Future-Style-Periodic-Table/
-├── images/                  # 预览截图
-│   ├── overview.png         # 周期表总览
-│   ├── heatmap.png          # 热力图模式
-│   ├── detail.png           # 元素详情卡片
-│   └── atom3d.png           # 3D 原子模型
+├── public/images/           # 预览截图
 ├── src/                     # 源代码
 │   ├── css/
-│   │   └── styles.css       # 样式文件 (1075 行)
-│   ├── js/
-│   │   ├── config.js        # 配置和数据处理函数
-│   │   ├── i18n.js          # 国际化翻译 + 工具函数
-│   │   └── main.js          # 主逻辑 (943 行，已优化)
-│   └── data/
-│       └── elements-full-data.js  # 118 种元素的完整数据
-├── index.html               # 入口文件
-├── .editorconfig            # 编辑器配置
-├── .gitignore               # Git 忽略规则
+│   │   └── styles.css       # 样式文件
+│   ├── types/
+│   │   ├── app.ts           # 枚举、类型定义 (Mode, Tab, Language)
+│   │   └── element.ts       # 元素数据接口 (Element, RawElement, Category)
+│   ├── config/
+│   │   ├── categories.ts    # 10 大元素分类 + 颜色
+│   │   └── electron.ts      # 电子排布算法 (轨道填充规则 + 例外)
+│   ├── data/
+│   │   ├── elements.json    # 118 种元素的完整数据
+│   │   └── index.ts         # 数据处理函数
+│   ├── i18n/
+│   │   ├── zh.ts            # 中文翻译
+│   │   ├── en.ts            # 英文翻译
+│   │   └── index.ts         # t() 翻译函数 + 工具
+│   ├── state/
+│   │   └── index.ts         # 集中式状态管理
+│   ├── modules/
+│   │   ├── table.ts         # 周期表渲染 + 定位算法
+│   │   ├── legend.ts        # 分类图例 + 筛选
+│   │   ├── heatmap.ts       # 热力图模式 (7 种)
+│   │   ├── atom3d.ts        # 3D 原子模型 + 拖拽/缩放
+│   │   ├── modal.ts         # 详情弹窗 + 5 个标签页
+│   │   ├── media.ts         # 图片懒加载 + 超时重试
+│   │   └── search.ts        # 搜索过滤
+│   ├── utils/
+│   │   └── dom.ts           # DOM 辅助函数
+│   └── main.ts              # 入口：初始化 + 事件绑定
+├── index.html               # 入口 HTML
+├── package.json             # 依赖管理
+├── tsconfig.json            # TypeScript 配置
+├── vite.config.ts           # Vite 构建配置
+├── .github/workflows/
+│   └── deploy.yml           # GitHub Pages 自动部署
 ├── README.md                # 中文文档
 ├── README_en.md             # 英文文档
 └── LICENSE                  # MIT 开源协议
 ```
 
-### 代码组织
-
-- **config.js**: 元素分类、电子排布配置、数据处理函数
-- **i18n.js**: 中英文翻译字典、语言切换、批量更新工具函数
-- **main.js**: 核心业务逻辑，包含渲染、交互、3D 模型等功能
-- **elements-full-data.js**: 118 种元素的详细数据（原子质量、电子排布、同位素等）
-
 ---
 
 ## 🚀 快速开始 (How to Run)
 
-得益于纯静态网页设计，本项目具有极佳的便携性：
-
-### 方式一：直接打开（推荐）
-1. **下载**：Clone 或下载本项目压缩包
-   ```bash
-   git clone https://github.com/SeanWong17/Future-Style-Periodic-Table.git
-   ```
-2. **运行**：直接用浏览器打开 `index.html` 即可
-3. **注意**：无需安装 Node.js，无需配置本地服务器，开箱即用
-
-### 方式二：本地服务器（可选）
-如果你想通过本地服务器运行（例如测试或开发）：
+### 开发环境
 
 ```bash
-# Python 3
-python -m http.server 8000
+# 克隆项目
+git clone https://github.com/SeanWong17/Future-Style-Periodic-Table.git
+cd Future-Style-Periodic-Table
 
-# Python 2
-python -m SimpleHTTPServer 8000
+# 安装依赖
+npm install
 
-# Node.js (需要先安装 http-server)
-npx http-server -p 8000
+# 启动开发服务器
+npm run dev
 ```
 
-然后访问 `http://localhost:8000`
+然后访问 `http://localhost:5173/Future-Style-Periodic-Table/`
+
+### 构建部署
+
+```bash
+# 生产构建
+npm run build
+
+# 预览构建结果
+npm run preview
+```
+
+推送到 `main` 分支会通过 GitHub Actions 自动部署到 GitHub Pages。
 
 ### 浏览器兼容性
 - ✅ Chrome 90+

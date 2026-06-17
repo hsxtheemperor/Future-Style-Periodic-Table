@@ -1,26 +1,15 @@
-# 依赖
-node_modules/
-yarn.lock
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
 
-# 编辑器
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# Environment variables
+.env*.local
 
-# 系统文件
+# Common ignores
+node_modules
+.next/
 .DS_Store
-Thumbs.db
-
-# 日志
-*.log
-npm-debug.log*
-
-# 临时文件
-*.tmp
-.cache/
-
-# 构建输出（如果将来添加构建工具）
-dist/
-build/
